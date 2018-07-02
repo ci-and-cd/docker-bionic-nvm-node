@@ -1,7 +1,5 @@
 
-FROM cirepo/nix:2.0.4_bionic
-
-MAINTAINER haolun
+FROM ubuntu:18.04
 
 COPY data/layer.tar /data/layer.tar
 RUN  mkdir -p /data/root \
