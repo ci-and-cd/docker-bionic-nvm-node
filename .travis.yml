@@ -1,0 +1,36 @@
+
+addons:
+  apt:
+    packages:
+    - aria2
+#before_install:
+branches:
+  only:
+  - develop
+  - master
+
+dist: trusty
+env:
+  global:
+  - IMAGE_ARG_FILESERVER=
+  - IMAGE_ARG_NVM_VERSION=0.33.11
+  - IMAGE_ARG_NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
+  - IMAGE_ARG_NVM_IOJS_ORG_MIRROR=https://iojs.org/dist
+  matrix:
+  - IMAGE_ARG_NODE_VERSION=10.5.0
+  - IMAGE_ARG_NODE_VERSION=9.11.1
+  - IMAGE_ARG_NODE_VERSION=8.11.3
+
+group: edge
+#install: true
+
+#before_script:
+script:
+- while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
+- bash build.sh
+- kill %1
+#after_script:
+
+services:
+- docker
+sudo: required
