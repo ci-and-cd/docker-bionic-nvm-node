@@ -55,4 +55,4 @@ docker-compose build dumper
 
 # Build final image
 docker-compose build bionic-nvm-node
-#docker-compose push bionic-nvm-node
+docker-compose push bionic-nvm-node
