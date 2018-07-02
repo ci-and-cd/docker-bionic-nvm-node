@@ -1,5 +1,5 @@
 
-FROM alpine:3.7
+FROM cirepo/nix:2.0.4_bionic
 
 MAINTAINER haolun
 
