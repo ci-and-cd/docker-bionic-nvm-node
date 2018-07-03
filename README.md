@@ -10,5 +10,6 @@ Dockerfile [ci-and-cd/docker-bionic-nvm-node on Github](https://github.com/ci-an
 
 ```dockerfile
 FROM alpine:3.7
-COPY --from=cirepo/bionic-nvm-node:9.11.1 /data/root /
+COPY --from=cirepo/bionic-nvm-node:9.11.1-archive /data/root /
+RUN sudo chown -R $(whoami):$(id -gn) /home/$(whoami)
 ```
