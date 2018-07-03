@@ -26,5 +26,5 @@ docker-compose build dumper
 # Build archive image
 docker-compose build archive
 
-#docker-compose push image
-#docker-compose push archive
+docker-compose push image
+docker-compose push archive
