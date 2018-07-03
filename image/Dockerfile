@@ -12,13 +12,20 @@ ARG IMAGE_ARG_NVM_IOJS_ORG_MIRROR
 USER root
 
 
+COPY docker /data
+
+
 ## install global node.js
-RUN NODE_VERSION="v${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
+RUN ls -l /data \
+    && NODE_VERSION="v${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
     && mkdir -p /opt \
-    && ${ARIA2C_DOWNLOAD} -o node-${NODE_VERSION}-linux-x64.tar.xz ${IMAGE_ARG_FILESERVER:-https://nodejs.org}/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz \
-    && tar xf node-${NODE_VERSION}-linux-x64.tar.xz -C /opt \
+    && if [ ! -f /data/node-${NODE_VERSION}-linux-x64.tar.xz ]; then \
+           touch /data/downloadmark; \
+           ${ARIA2C_DOWNLOAD} -d /data -o node-${NODE_VERSION}-linux-x64.tar.xz ${IMAGE_ARG_FILESERVER:-https://nodejs.org}/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz; \
+       fi \
+    && tar xf /data/node-${NODE_VERSION}-linux-x64.tar.xz -C /opt \
     && ln -sf /opt/node-${NODE_VERSION}-linux-x64 /opt/node \
-    && rm -f node-${NODE_VERSION}-linux-x64.tar.xz
+    && if [ -f /data/downloadmark ]; then rm -f /data/node-${NODE_VERSION}-linux-x64.tar.xz; fi
 
 
 USER ubuntu
@@ -31,11 +38,11 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v${IMAGE_ARG_NVM_V
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm\n\
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion\
     ' >> ~/.bash_profile \
-    && sudo cp /home/ubuntu/.bash_profile /root/.bash_profile && sudo chown root:root /root/.bash_profile \
+    && sudo cp /home/$(whoami)/.bash_profile /root/.bash_profile && sudo chown root:root /root/.bash_profile \
     && . ~/.nvm/nvm.sh \
     && export NVM_NODEJS_ORG_MIRROR="${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://nodejs.org/dist}" \
     && echo NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR} \
     && export NVM_IOJS_ORG_MIRROR="${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://iojs.org/dist}" \
     && echo NVM_IOJS_ORG_MIRROR ${NVM_IOJS_ORG_MIRROR} \
     && sudo -E bash -l -c "nvm install ${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
-    && sudo chown -R $USER:$(id -gn $USER) /home/ubuntu
+    && sudo chown -R $USER:$(id -gn $USER) /home/$(whoami)

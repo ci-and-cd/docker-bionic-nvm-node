@@ -1,11 +1,11 @@
 
 version: '2.1'
 services:
-  #docker-compose build builder
-  builder:
+  #docker-compose build image
+  image:
     build:
-      context: .
-      dockerfile: Dockerfile_builder
+      context: image
+      dockerfile: Dockerfile
       args:
       - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER}
       #- IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://o9wbz99tz.bkt.clouddn.com}
@@ -13,16 +13,16 @@ services:
       - IMAGE_ARG_NVM_VERSION=${IMAGE_ARG_NVM_VERSION:-0.33.11}
       - IMAGE_ARG_NVM_NODEJS_ORG_MIRROR=${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/node}
       - IMAGE_ARG_NVM_IOJS_ORG_MIRROR=${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/iojs}
-    image: tmp/builder:${IMAGE_TAG:-9.11.1}
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-bionic-nvm-node}:${IMAGE_TAG:-9.11.1}
   #docker-compose build dumper
   dumper:
     build:
-      context: .
+      context: dumper
       dockerfile: Dockerfile_dumper
     image: tmp/dumper:latest
-  #docker-compose build bionic-nvm-node
-  bionic-nvm-node:
+  #docker-compose build archive
+  archive:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: ${IMAGE_PREFIX:-cirepo}/bionic-nvm-node:${IMAGE_TAG:-9.11.1}
+      dockerfile: Dockerfile_archive
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-bionic-nvm-node}:${IMAGE_TAG:-9.11.1}-archive
