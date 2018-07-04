@@ -21,16 +21,19 @@ echo -e "layers merged into ${LAYERS[0]} $(du -sh ${LAYERS[0]})\n"
 echo copy ${LAYERS[0]} to $(pwd)/data/layer.tar
 cp -f ${LAYERS[0]} $(pwd)/data/layer.tar
 
-#echo find empty directories
-#tar_entries=($(tar tf data/layer.tar))
-#tar_directories=($(tar tf data/layer.tar | grep -E '.*/$' | sort -r -n))
-#tar_empty_directories=()
-#for directory in ${tar_directories[@]}; do
-#    if [ -z "$(printf -- '%s\n' "${tar_entries[@]}" | grep -E "${directory}.+")" ]; then tar_empty_directories+=(${directory}); fi
-#done
-#echo tar_empty_directories
-#printf -- '%s\n' "${tar_empty_directories[@]}"
+echo find empty directories
+tar_entries=($(tar tf data/layer.tar))
+tar_directories=($(tar tf data/layer.tar | grep -E '.*/$' | grep -v '\.nvm' | sort -r -n))
+tar_empty_directories=()
+for directory in ${tar_directories[@]}; do
+    if [ -z "$(printf -- '%s\n' "${tar_entries[@]}" | grep -E "${directory}.+")" ]; then tar_empty_directories+=(${directory}); fi
+done
+echo tar_empty_directories
+printf -- '%s\n' "${tar_empty_directories[@]}"
 #tar --delete -f data/layer.tar "${tar_empty_directories[@]}"
 
 sudo mkdir -p /data/root && sudo chown -R $(whoami):$(id -gn) /data && tar xf $(pwd)/data/layer.tar -C /data/root/
 rm -rf $(pwd)/data/image && sudo rm -f $(pwd)/data/image.tar
+
+find /data/root/home/ubuntu ! -path '/data/root/home/ubuntu' | grep -v '.nvm' | xargs rm -rf
+rm -rf /data/root/root
