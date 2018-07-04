@@ -6,11 +6,12 @@ ls -l /home/$(whoami)/data
 LAYERS=();
 mkdir -p $(pwd)/data/image && tar -xf $(pwd)/data/image.tar -C $(pwd)/data/image
 for layer in $(pwd)/data/image/*/layer.tar; do
-   echo layer: ${layer};
-   tar -tf ${layer} | grep -E '^/dev(/)?.*/$' | sort -r -n;
-   for element in $(tar -tf ${layer} | grep -E '^dev/.*' | sort -r -n); do echo delete ${element}; tar --delete -f ${layer} "${element}" > /dev/null 2>&1 || echo error on delete ${element}; done
-   if [ -n "$(tar -tf ${layer} | grep "opt/node-v${IMAGE_ARG_NODE_VERSION:-9.11.1}-linux-x64")" ]; then echo found node-v${IMAGE_ARG_NODE_VERSION:-9.11.1}-linux-x64 in ${layer}; LAYERS+=(${layer}); fi
-   if [ -n "$(tar -tf ${layer} | grep '\.nvm')" ]; then echo found .nvm in ${layer}; LAYERS+=(${layer}); fi
+    echo layer: ${layer};
+
+    for element in $(tar -tf ${layer} | grep -E '^dev/.*' | sort -r -n); do echo delete ${element}; tar --delete -f ${layer} "${element}" || echo error on delete ${element}; done
+
+    if [ -n "$(tar -tf ${layer} | grep "opt/node-v${IMAGE_ARG_NODE_VERSION:-9.11.1}-linux-x64")" ]; then echo found node-v${IMAGE_ARG_NODE_VERSION:-9.11.1}-linux-x64 in ${layer}; LAYERS+=(${layer}); fi
+    if [ -n "$(tar -tf ${layer} | grep '\.nvm')" ]; then echo found .nvm in ${layer}; LAYERS+=(${layer}); fi
 done
 
 echo -e "merge layers '${LAYERS[@]}' into one\n"
