@@ -30,7 +30,7 @@ for directory in ${tar_directories[@]}; do
 done
 echo tar_empty_directories
 printf -- '%s\n' "${tar_empty_directories[@]}"
-#tar --delete -f data/layer.tar "${tar_empty_directories[@]}"
+#tar --delete -f data/layer.tar ${tar_empty_directories[@]}
 
 sudo mkdir -p /data/root && sudo chown -R $(whoami):$(id -gn) /data && tar xf $(pwd)/data/layer.tar -C /data/root/
 rm -rf $(pwd)/data/image && sudo rm -f $(pwd)/data/image.tar
