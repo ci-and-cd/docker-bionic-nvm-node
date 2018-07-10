@@ -32,17 +32,20 @@ USER ubuntu
 
 
 ## install node.js for current user
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v${IMAGE_ARG_NVM_VERSION:-0.33.11}/install.sh | bash \
-    && touch ~/.bash_profile \
-    && echo 'export NVM_DIR="$HOME/.nvm"\n\
+RUN set -ex \
+  && echo "TODO fix git's 'Problem with the SSL CA cert' issue" \
+  && git config --global http.sslverify false \
+  && curl -o- https://raw.githubusercontent.com/creationix/nvm/v${IMAGE_ARG_NVM_VERSION:-0.33.11}/install.sh | bash \
+  && touch ~/.bash_profile \
+  && echo 'export NVM_DIR="$HOME/.nvm"\n\
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm\n\
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion\
-    ' >> ~/.bash_profile \
-    && sudo cp /home/$(whoami)/.bash_profile /root/.bash_profile && sudo chown root:root /root/.bash_profile \
-    && . ~/.nvm/nvm.sh \
-    && export NVM_NODEJS_ORG_MIRROR="${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://nodejs.org/dist}" \
-    && echo NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR} \
-    && export NVM_IOJS_ORG_MIRROR="${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://iojs.org/dist}" \
-    && echo NVM_IOJS_ORG_MIRROR ${NVM_IOJS_ORG_MIRROR} \
-    && sudo -E bash -l -c "nvm install ${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
-    && sudo chown -R $USER:$(id -gn $USER) /home/$(whoami)
+  ' >> ~/.bash_profile \
+  && sudo cp /home/$(whoami)/.bash_profile /root/.bash_profile && sudo chown root:root /root/.bash_profile \
+  && . ~/.nvm/nvm.sh \
+  && export NVM_NODEJS_ORG_MIRROR="${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://nodejs.org/dist}" \
+  && echo NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR} \
+  && export NVM_IOJS_ORG_MIRROR="${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://iojs.org/dist}" \
+  && echo NVM_IOJS_ORG_MIRROR ${NVM_IOJS_ORG_MIRROR} \
+  && sudo -E bash -l -c "nvm install ${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
+  && sudo chown -R $USER:$(id -gn $USER) /home/$(whoami)
