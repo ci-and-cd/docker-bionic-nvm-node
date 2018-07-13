@@ -11,7 +11,7 @@ if [ -n "${CI_OPT_DOCKER_REGISTRY_PASS}" ] && [ -n "${CI_OPT_DOCKER_REGISTRY_USE
 
 export IMAGE_PREFIX=${IMAGE_PREFIX:-cirepo};
 export IMAGE_NAME=${IMAGE_NAME:-nvm-node}
-export IMAGE_TAG=${IMAGE_ARG_NODE_VERSION:-9.11.1-bionic}
+export IMAGE_TAG=${IMAGE_ARG_NODE_VERSION:-9.11.1}-bionic
 if [ "${TRAVIS_BRANCH}" != "master" ]; then export IMAGE_TAG=${IMAGE_TAG}-SNAPSHOT; fi
 
 # Build image
