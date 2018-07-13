@@ -10,8 +10,8 @@ WORK_DIR=$(pwd)
 if [ -n "${CI_OPT_DOCKER_REGISTRY_PASS}" ] && [ -n "${CI_OPT_DOCKER_REGISTRY_USER}" ]; then echo ${CI_OPT_DOCKER_REGISTRY_PASS} | docker login --password-stdin -u="${CI_OPT_DOCKER_REGISTRY_USER}" docker.io; fi
 
 export IMAGE_PREFIX=${IMAGE_PREFIX:-cirepo};
-export IMAGE_NAME=${IMAGE_NAME:-bionic-nvm-node}
-export IMAGE_TAG=${IMAGE_ARG_NODE_VERSION:-9.11.1}
+export IMAGE_NAME=${IMAGE_NAME:-nvm-node}
+export IMAGE_TAG=${IMAGE_ARG_NODE_VERSION:-9.11.1-bionic}
 if [ "${TRAVIS_BRANCH}" != "master" ]; then export IMAGE_TAG=${IMAGE_TAG}-SNAPSHOT; fi
 
 # Build image

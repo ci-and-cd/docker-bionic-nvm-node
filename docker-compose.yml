@@ -13,7 +13,7 @@ services:
       - IMAGE_ARG_NVM_VERSION=${IMAGE_ARG_NVM_VERSION:-0.33.11}
       - IMAGE_ARG_NVM_NODEJS_ORG_MIRROR=${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/node}
       - IMAGE_ARG_NVM_IOJS_ORG_MIRROR=${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/iojs}
-    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-bionic-nvm-node}:${IMAGE_TAG:-9.11.1}
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-nvm-node}:${IMAGE_TAG:-9.11.1-bionic}
   #docker-compose build dumper
   dumper:
     build:
@@ -25,4 +25,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_archive
-    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-bionic-nvm-node}:${IMAGE_TAG:-9.11.1}-archive
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-nvm-node}:${IMAGE_TAG:-9.11.1-bionic}-archive
