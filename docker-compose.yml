@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
       args:
       - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER}
-      #- IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://o9wbz99tz.bkt.clouddn.com}
+      #- IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://fileserver.infra.top}
       - IMAGE_ARG_NODE_VERSION=${IMAGE_ARG_NODE_VERSION:-9.11.1}
       - IMAGE_ARG_NVM_VERSION=${IMAGE_ARG_NVM_VERSION:-0.33.11}
       - IMAGE_ARG_NVM_NODEJS_ORG_MIRROR=${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/node}

@@ -1,5 +1,5 @@
 
-FROM cirepo/nix:2.0.4-bionic
+FROM cirepo/nix:2.1.1-bionic
 
 
 ARG IMAGE_ARG_FILESERVER
