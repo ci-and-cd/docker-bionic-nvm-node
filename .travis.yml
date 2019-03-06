@@ -17,9 +17,9 @@ env:
   - IMAGE_ARG_NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
   - IMAGE_ARG_NVM_IOJS_ORG_MIRROR=https://iojs.org/dist
   matrix:
-  - IMAGE_ARG_NODE_VERSION=10.5.0
   - IMAGE_ARG_NODE_VERSION=10.15.3
-  - IMAGE_ARG_NODE_VERSION=8.11.3
+#  - IMAGE_ARG_NODE_VERSION=10.5.0
+#  - IMAGE_ARG_NODE_VERSION=8.11.3
 
 group: edge
 #install: true
