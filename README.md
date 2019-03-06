@@ -11,7 +11,7 @@ Dockerfile [ci-and-cd/docker-bionic-nvm-node on Github](https://github.com/ci-an
 ```dockerfile
 
 FROM ubuntu:18.04
-COPY --from=cirepo/nvm-node:9.11.1-bionic-archive /data/root /
+COPY --from=cirepo/nvm-node:10.15.3-bionic-archive /data/root /
 RUN sudo chown -R $(whoami):$(id -gn) /home/$(whoami) \
   && touch /home/$(whoami)/.profile \
   && echo '\

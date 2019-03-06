@@ -1,5 +1,5 @@
 
-FROM cirepo/nix:2.1.1-bionic
+FROM cirepo/nix:2.2.1-bionic
 
 
 ARG IMAGE_ARG_FILESERVER
@@ -17,7 +17,7 @@ COPY docker /data
 
 ## install global node.js
 RUN ls -l /data \
-    && NODE_VERSION="v${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
+    && NODE_VERSION="v${IMAGE_ARG_NODE_VERSION:-10.15.3}" \
     && mkdir -p /opt \
     && if [ ! -f /data/node-${NODE_VERSION}-linux-x64.tar.xz ]; then \
            touch /data/downloadmark; \
@@ -35,7 +35,7 @@ USER ubuntu
 RUN set -ex \
   && echo "TODO fix git's 'Problem with the SSL CA cert' issue" \
   && git config --global http.sslverify false \
-  && curl -o- https://raw.githubusercontent.com/creationix/nvm/v${IMAGE_ARG_NVM_VERSION:-0.33.11}/install.sh | bash \
+  && curl -o- https://raw.githubusercontent.com/creationix/nvm/v${IMAGE_ARG_NVM_VERSION:-0.34.0}/install.sh | bash \
   && touch ~/.profile \
   && echo 'export NVM_DIR="$HOME/.nvm"\n\
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm\n\
@@ -47,5 +47,5 @@ RUN set -ex \
   && echo NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR} \
   && export NVM_IOJS_ORG_MIRROR="${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://iojs.org/dist}" \
   && echo NVM_IOJS_ORG_MIRROR ${NVM_IOJS_ORG_MIRROR} \
-  && sudo -E bash -l -c "nvm install ${IMAGE_ARG_NODE_VERSION:-9.11.1}" \
+  && sudo -E bash -l -c "nvm install ${IMAGE_ARG_NODE_VERSION:-10.15.3}" \
   && sudo chown -R $USER:$(id -gn $USER) /home/$(whoami)

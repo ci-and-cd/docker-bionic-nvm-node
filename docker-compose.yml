@@ -9,11 +9,11 @@ services:
       args:
       - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER}
       #- IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://fileserver.infra.top}
-      - IMAGE_ARG_NODE_VERSION=${IMAGE_ARG_NODE_VERSION:-9.11.1}
-      - IMAGE_ARG_NVM_VERSION=${IMAGE_ARG_NVM_VERSION:-0.33.11}
+      - IMAGE_ARG_NODE_VERSION=${IMAGE_ARG_NODE_VERSION:-10.15.3}
+      - IMAGE_ARG_NVM_VERSION=${IMAGE_ARG_NVM_VERSION:-0.34.0}
       - IMAGE_ARG_NVM_NODEJS_ORG_MIRROR=${IMAGE_ARG_NVM_NODEJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/node}
       - IMAGE_ARG_NVM_IOJS_ORG_MIRROR=${IMAGE_ARG_NVM_IOJS_ORG_MIRROR:-https://npm.taobao.org/mirrors/iojs}
-    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-nvm-node}:${IMAGE_TAG:-9.11.1-bionic}
+    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-nvm-node}:${IMAGE_TAG:-10.15.3-bionic}
   #docker-compose build dumper
   dumper:
     build:
@@ -25,4 +25,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_archive
-    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-nvm-node}:${IMAGE_TAG:-9.11.1-bionic}-archive
+    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-nvm-node}:${IMAGE_TAG:-10.15.3-bionic}-archive
